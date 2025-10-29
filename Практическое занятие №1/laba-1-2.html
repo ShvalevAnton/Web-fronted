@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 1.2</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            min-width: 30px;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Лабораторная работа 1.2</h1>
+    <p>Таблица умножения 10x10 с использованием циклов</p>
+
+    <script>
+        // Создаем таблицу
+        document.write('<table>');
+        
+        // Заголовок таблицы
+        document.write('<tr>');
+        document.write('<th>×</th>'); // Пустая ячейка в левом верхнем углу
+        for (var i = 1; i <= 10; i++) {
+            document.write('<th>' + i + '</th>');
+        }
+        document.write('</tr>');
+        
+        // Тело таблицы
+        for (var i = 1; i <= 10; i++) {
+            document.write('<tr>');
+            document.write('<th>' + i + '</th>'); // Заголовок строки
+            
+            for (var j = 1; j <= 10; j++) {
+                document.write('<td>' + (i * j) + '</td>');
+            }
+            
+            document.write('</tr>');
+        }
+        
+        document.write('</table>');
+    </script>
+</body>
+</html>
