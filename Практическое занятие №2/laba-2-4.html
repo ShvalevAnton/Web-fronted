@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Упражнение 4: Обработка форм</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: #4d90fe;
+            outline: none;
+            box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+        }
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        .success-message {
+            color: #388e3c;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Регистрация</h1>
+        <form id="registrationForm" method="POST">
+            <div class="form-group">
+                <label for="login">Логин:</label>
+                <input type="text" id="login" name="login">
+                <div class="error" id="loginError">Пожалуйста, введите логин</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password">
+                <div class="error" id="passwordError">Пароль должен содержать от 6 до 12 символов</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Проверка пароля:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword">
+                <div class="error" id="confirmPasswordError">Пароли не совпадают</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email">
+                <div class="error" id="emailError">Введите корректный e-mail адрес (должен содержать @)</div>
+            </div>
+            
+            <button type="submit">Отправить</button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            Данные успешно отправлены!
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Предотвращаем отправку формы для демонстрации
+            
+            // Сбрасываем все сообщения об ошибках
+            resetErrors();
+            
+            // Получаем значения полей
+            const login = document.getElementById('login').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value.trim();
+            
+            let isValid = true;
+            
+            // Проверка заполнения всех полей
+            if (login === '') {
+                showError('loginError', 'Пожалуйста, введите логин');
+                isValid = false;
+            }
+            
+            if (password === '') {
+                showError('passwordError', 'Пожалуйста, введите пароль');
+                isValid = false;
+            }
+            
+            if (confirmPassword === '') {
+                showError('confirmPasswordError', 'Пожалуйста, подтвердите пароль');
+                isValid = false;
+            }
+            
+            if (email === '') {
+                showError('emailError', 'Пожалуйста, введите e-mail');
+                isValid = false;
+            }
+            
+            // Если все поля заполнены, проверяем остальные условия
+            if (isValid) {
+                // Проверка длины пароля (от 6 до 12 символов)
+                if (password.length < 6 || password.length > 12) {
+                    showError('passwordError', 'Пароль должен содержать от 6 до 12 символов');
+                    isValid = false;
+                }
+                
+                // Проверка совпадения паролей
+                if (password !== confirmPassword) {
+                    showError('confirmPasswordError', 'Пароли не совпадают');
+                    isValid = false;
+                }
+                
+                // Проверка наличия символа @ в e-mail
+                if (email.indexOf('@') === -1) {
+                    showError('emailError', 'Введите корректный e-mail адрес (должен содержать @)');
+                    isValid = false;
+                }
+            }
+            
+            // Если форма валидна, показываем сообщение об успехе
+            if (isValid) {
+                document.getElementById('successMessage').style.display = 'block';
+                // В реальном приложении здесь можно отправить форму
+                // this.submit();
+            }
+        });
+        
+        // Функция для показа сообщения об ошибке
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Функция для сброса всех сообщений об ошибках
+        function resetErrors() {
+            const errorElements = document.querySelectorAll('.error');
+            errorElements.forEach(function(element) {
+                element.style.display = 'none';
+            });
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        
+        // Добавляем обработчики событий для сброса ошибок при вводе
+        document.getElementById('login').addEventListener('input', function() {
+            document.getElementById('loginError').style.display = 'none';
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('passwordError').style.display = 'none';
+        });
+        
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            document.getElementById('confirmPasswordError').style.display = 'none';
+        });
+        
+        document.getElementById('email').addEventListener('input', function() {
+            document.getElementById('emailError').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

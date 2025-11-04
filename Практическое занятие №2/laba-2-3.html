@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Упражнение 3: Работа с окнами в JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .link-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .new-window-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .new-window-link:hover {
+            background-color: #45a049;
+        }
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .requirements {
+            margin-top: 30px;
+        }
+        .requirements ul {
+            padding-left: 20px;
+        }
+        .requirements li {
+            margin-bottom: 10px;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Упражнение 3: Работа с окнами в JavaScript</h1>
+        
+        <div class="info-box">
+            <p>На этой странице реализована функциональность открытия нового окна с заданными параметрами при нажатии на ссылку.</p>
+        </div>
+        
+        <div class="link-container">
+            <a href="#" id="newWindowLink" class="new-window-link">Новое окно</a>
+        </div>
+        
+        <div class="requirements">
+            <h2>Требования к реализации:</h2>
+            <ul>
+                <li>Размеры нового окна: 300 на 400 пикселей</li>
+                <li>В новом окне должны присутствовать:
+                    <ul>
+                        <li>Меню браузера</li>
+                        <li>Навигация (кнопки назад, вперед)</li>
+                        <li>Панель вкладок</li>
+                        <li>Адресная строка</li>
+                        <li>Закладки/избранное</li>
+                        <li>Строка состояния браузера</li>
+                    </ul>
+                </li>
+                <li>Разрешение пользователю изменять размеры нового окна</li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <p>Примечание: В зависимости от настроек браузера, некоторые элементы интерфейса могут быть скрыты или недоступны.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const newWindowLink = document.getElementById('newWindowLink');
+            
+            newWindowLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Параметры для нового окна
+                const windowFeatures = 
+                    'width=300,height=400,' +
+                    'menubar=yes,' +        // Меню браузера
+                    'toolbar=yes,' +        // Навигация (кнопки назад, вперед)
+                    'location=yes,' +       // Адресная строка
+                    'personalbar=yes,' +    // Закладки/избранное
+                    'status=yes,' +         // Строка состояния браузера
+                    'resizable=yes';        // Разрешение изменения размеров
+                
+                // Открытие нового окна
+                const newWindow = window.open('', '_blank', windowFeatures);
+                
+                // Если браузер заблокировал всплывающее окно
+                if (!newWindow) {
+                    alert('Браузер заблокировал открытие нового окна. Пожалуйста, разрешите всплывающие окна для этого сайта.');
+                    return;
+                }
+                
+                // Заполнение содержимого нового окна
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="ru">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Новое окно</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                padding: 20px;
+                                background-color: #f0f0f0;
+                            }
+                            h1 {
+                                color: #333;
+                                text-align: center;
+                            }
+                            .content {
+                                background-color: white;
+                                padding: 15px;
+                                border-radius: 5px;
+                                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Новое окно</h1>
+                        <div class="content">
+                            <p>Это новое окно было открыто с помощью JavaScript.</p>
+                            <p>Параметры окна:</p>
+                            <ul>
+                                <li>Ширина: 300px</li>
+                                <li>Высота: 400px</li>
+                                <li>Изменение размеров разрешено</li>
+                            </ul>
+                            <p>Вы можете изменить размер этого окна, перетаскивая его границы.</p>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                
+                newWindow.document.close();
+            });
+        });
+    </script>
+</body>
+</html>
