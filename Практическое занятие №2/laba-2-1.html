@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменение размера изображения при клике</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #clickable-image {
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .instructions {
+            background-color: #e9f7fe;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Изменение размера изображения при клике</h1>
+        
+        <div class="image-container">
+            <img id="clickable-image" src="apple.jpg" 
+                 alt="Изображение для изменения размера" width="400" height="300">
+        </div>
+        
+        <div class="status" id="status">Текущий размер: обычный</div>
+        
+        <div class="instructions">
+            <p><strong>Инструкция:</strong> Кликните левой кнопкой мыши по изображению, чтобы увеличить его в 2 раза. Повторный клик вернет изображение к исходному размеру.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('clickable-image');
+            const status = document.getElementById('status');
+            let isEnlarged = false;
+            
+            image.addEventListener('click', function() {
+                if (isEnlarged) {
+                    // Возвращаем исходный размер
+                    image.style.transform = 'scale(1)';
+                    status.textContent = 'Текущий размер: обычный';
+                } else {
+                    // Увеличиваем в 2 раза
+                    image.style.transform = 'scale(2)';
+                    status.textContent = 'Текущий размер: увеличенный (x2)';
+                }
+                
+                // Переключаем состояние
+                isEnlarged = !isEnlarged;
+            });
+        });
+    </script>
+</body>
+</html>
