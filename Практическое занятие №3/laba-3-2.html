@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Современные Web-технологии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .menu-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .web-menu {
+            width: 500px;
+            background-color: #f9e79f;
+            border: 3px solid #b03a2e;
+            border-radius: 12px;
+            padding: 20px;
+            /* Тень СПРАВА и СНИЗУ, цвет — как у рамки */
+            box-shadow: 4px 4px 8px rgba(176, 58, 46, 0.3);
+            font-size: 16px;
+            line-height: 1.5;
+            color: #b03a2e;
+        }
+
+        .web-menu ul {
+            list-style-type: none;
+        }
+
+        .web-menu li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(176, 58, 46, 0.3);
+            word-wrap: break-word;
+        }
+
+        .web-menu li:last-child {
+            border-bottom: none;
+        }
+
+        /* Вендорные префиксы для старых браузеров */
+        .web-menu {
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -o-border-radius: 12px;
+            -ms-border-radius: 12px;
+
+            -webkit-box-shadow: 4px 4px 8px rgba(176, 58, 46, 0.3);
+            -moz-box-shadow: 4px 4px 8px rgba(176, 58, 46, 0.3);
+            -o-box-shadow: 4px 4px 8px rgba(176, 58, 46, 0.3);
+            -ms-box-shadow: 4px 4px 8px rgba(176, 58, 46, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <h2 class="menu-title">Современные Web - технологии</h2>
+
+    <div class="web-menu">
+        <ul>
+            <li>Модуль 1. Введение. Структура Web-технологий. Обзор технологий разработки клиентских Web-приложений</li>
+            <li>Модуль 2. Введение в XML. Структура XML документа. DOM XML</li>
+            <li>Модуль 3. Обзор технологий разработки серверных Web-приложений. Web -сервисы</li>
+            <li>Модуль 4. Web 2.0. Семантический Web</li>
+            <li>Модуль 5. Синдикация и агрегирование веб-контента. Улучшение usability веб-контента</li>
+            <li>Модуль 6. Создание динамических Web-страниц на клиентской стороне. AJAX</li>
+            <li>Модуль 7. Обеспечение безопасности Web-приложений</li>
+            <li>Модуль 8. Насыщенные интернет-приложения (RIA)</li>
+            <li>Модуль 9. Silverlight и XAML</li>
+            <li>Модуль 10. Технологии облачных вычислений</li>
+        </ul>
+    </div>
+
+</body>
+</html>
