@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление CSS из JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        #change {
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .link-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        a:hover {
+            background-color: #2980b9;
+        }
+        
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Управление CSS из JavaScript</h1>
+    
+    <div class="container">
+        <h2>Описание задания:</h2>
+        <p>Эта страница демонстрирует изменение стилей элемента с помощью JavaScript:</p>
+        <ul>
+            <li>Создана функция ChangeStyle(), которая изменяет цвет, размер, добавляет подчеркивание и выделение полужирным шрифтом текста</li>
+            <li>Функция применяется к элементу с id="change"</li>
+            <li>Функция вызывается при наведении курсора на ссылку</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <h2>Демонстрация:</h2>
+        <p>Наведите курсор на ссылку ниже, чтобы изменить стиль текста:</p>
+        
+        <div id="change">
+            Этот текст изменит свой стиль при наведении на ссылку. Обратите внимание на изменение цвета, размера шрифта, добавление подчеркивания и полужирного начертания.
+        </div>
+        
+        <div class="link-container">
+            <a href="#" onmouseover="ChangeStyle()" onmouseout="ResetStyle()">Наведите на меня курсор</a>
+        </div>
+    </div>
+    
+   <!--  <div class="instructions">
+        <h3>Как это работает:</h3>
+        <p>Функция ChangeStyle() получает элемент по его id="change" и изменяет его CSS-свойства:</p>
+        <ul>
+            <li>Цвет текста становится красным</li>
+            <li>Размер шрифта увеличивается до 20px</li>
+            <li>Добавляется подчеркивание</li>
+            <li>Текст становится полужирным</li>
+        </ul>
+        <p>Функция ResetStyle() возвращает исходные стили, когда курсор убирается с ссылки.</p>
+    </div> -->
+
+    <script>
+        function ChangeStyle() {
+            // Получаем элемент по id
+            const element = document.getElementById("change");
+            
+            // Изменяем стили элемента
+            element.style.color = "#e74c3c";
+            element.style.fontSize = "20px";
+            element.style.textDecoration = "underline";
+            element.style.fontWeight = "bold";
+        }
+        
+        function ResetStyle() {
+            // Получаем элемент по id
+            const element = document.getElementById("change");
+            
+            // Возвращаем исходные стили
+            element.style.color = "";
+            element.style.fontSize = "";
+            element.style.textDecoration = "";
+            element.style.fontWeight = "";
+        }
+    </script>
+</body>
+</html>
