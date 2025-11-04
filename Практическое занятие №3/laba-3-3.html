@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блок с тенью и изображением</title>
+    <style>
+        .image-container {
+            width: 210px;
+            height: 160px;
+			border: 2px solid #ccc; /* ширина рамки = 5px */
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background-color: #fff;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px; /* Небольшой радиус для изображения внутри */
+        }
+
+        /* Для старых браузеров (опционально, но не требуется для современных) */
+        @supports not (box-shadow: 0 0 0 rgba(0,0,0,0)) {
+            .image-container {
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="apple.jpg" alt="Яблоко на ветке">
+    </div>
+</body>
+</html>
