@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Диагональный градиент</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Создаем диагональный градиент от левого верхнего угла к правому нижнему
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+        // Добавляем цвета по порядку:
+        // 0% — розовый (малиновый)
+        gradient.addColorStop(0, '#FF007F');
+        // 53% — зеленовато-голубой (бирюзовый)
+        gradient.addColorStop(0.53, '#00CC99');
+        // 66% — ярко-зеленый
+        gradient.addColorStop(0.66, '#7FFF00');
+        // 75 - 100% — желтый
+        gradient.addColorStop(0.75, '#FFFF00');
+        gradient.addColorStop(1, '#FFFF00');
+
+        // Заполняем весь холст градиентом
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
+</body>
+
+</html>
