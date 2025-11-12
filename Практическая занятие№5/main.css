@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    /* Добавляем Flexbox для выравнивания элементов внутри */
+    display: flex;
+    align-items: flex-start;
+    /* Выравнивание по верхнему краю элементов */
+    gap: 5px;
+    /* Небольшой зазор между элементами */
+    flex-wrap: wrap;
+    /* Позволяем элементам переноситься, если ширины не хватает */
+}
+
+label {
+    display: inline-block;
+    width: 100px;  
+}
+
+/* Уточняем селекторы для input, чтобы не затронуть output */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"]
+ {
+    padding: 5px;
+    width: 200px;
+}
+
+/* Стиль для output */
+output {
+    padding: 5px;
+    width: 50px;
+    /* Ширина для output */
+    border: 1px solid #ccc;
+    /* Простая рамка */
+    background-color: #f9f9f9;
+    /* Легкий фон */
+    align-self: center;
+    /* Выравнивание по центру по высоте */
+}
+
+.status-icon {
+    width: 16px;
+    height: 16px;    
+    align-self: center;
+    /* Выравнивание по центру по высоте */
+}
+
+button {
+    padding: 8px 16px;
+    margin-top: 10px;
+}

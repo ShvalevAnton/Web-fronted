@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    width: 80px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    padding: 5px;
+    width: 200px;
+}
+
+.status-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.required {
+    color: red;
+}
+
+.optional {
+    color: green;
+}
+
+button {
+    padding: 8px 16px;
+    margin-top: 10px;
+}

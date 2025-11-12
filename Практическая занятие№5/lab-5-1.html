@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма HTML5</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h3>Пожалуйста, заполните обязательные поля.</h3>
+    <!-- Добавлен атрибут novalidate к форме -->
+    <form id="myForm" novalidate>
+        <!-- Поле с autofocus и placeholder -->
+        <div class="form-group">
+            <label for="name" class="required">Имя*:</label>
+            <input type="text" id="name" name="name" required autofocus placeholder="Введите ваше имя">
+            <img src="no.jpg" alt="Ошибка" class="status-icon" id="nameStatus">
+        </div>
+
+        <!-- Поле с типом number -->
+        <div class="form-group">
+            <label for="age" class="optional">Возраст:</label>
+            <input type="number" id="age" name="age" min="0" max="120" step="1" placeholder="0-120">
+            <img src="yes.jpg" alt="OK" class="status-icon" id="ageStatus">
+        </div>
+
+        <!-- Поле с типом email -->
+        <div class="form-group">
+            <label for="email" class="required">E-mail*:</label>
+            <input type="email" id="email" name="email" required placeholder="user@example.com">
+            <img src="no.jpg" alt="Ошибка" class="status-icon" id="emailStatus">
+        </div>
+
+        <!-- Поле с типом url -->
+        <div class="form-group">
+            <label for="website" class="optional">Сайт:</label>
+            <input type="url" id="website" name="website" placeholder="https://example.com">
+            <img src="yes.jpg" alt="OK" class="status-icon" id="websiteStatus">
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        "use strict"; // Включение строгого режима       
+
+        // Функция для обновления статуса поля
+        function updateFieldStatus(fieldElement, statusImgElement) {
+            const isRequired = fieldElement.hasAttribute('required');
+            // Проверяем валидность поля (включая нативную HTML5)
+            const isFieldValid = fieldElement.validity.valid;
+
+            if (isRequired) {
+                // Обязательное поле: крестик (no.jpg), если пустое или невалидное; галочка (yes.jpg), если заполнено и валидно
+                if (fieldElement.value.trim() === '' || !isFieldValid) {
+                    statusImgElement.src = "no.jpg"; // Крестик
+                } else {
+                    statusImgElement.src = "yes.jpg"; // Галочка
+                }
+            } else {
+                // Необязательное поле: галочка (yes.jpg), если заполнено и валидно, иначе (если заполнено, но невалидно) - крестик
+                // Или можно просто показывать галочку, если поле необязательное и не пустое
+                // В данном варианте: крестик, если заполнено, но невалидно. Галочка, если пустое или валидно.
+                if (fieldElement.value.trim() !== '' && !isFieldValid) {
+                    statusImgElement.src = "no.jpg"; // Крестик, если заполнено, но ошибка
+                } else {
+                    statusImgElement.src = "yes.jpg"; // Галочка, если пустое или валидно
+                }
+            }
+        }
+
+        // --- Инициализация ---
+        const fieldsToValidate = [
+            { id: 'name', statusId: 'nameStatus' },
+            { id: 'age', statusId: 'ageStatus' },
+            { id: 'email', statusId: 'emailStatus' },
+            { id: 'website', statusId: 'websiteStatus' }            
+        ];
+
+        fieldsToValidate.forEach(item => {
+            const field = document.getElementById(item.id);
+            const statusImg = document.getElementById(item.statusId);
+
+            // Привязываем событие input к каждому полю
+            field.addEventListener('input', () => updateFieldStatus(field, statusImg));
+            // Привязываем событие change (например, для файлов, даты, времени, цвета)
+            field.addEventListener('change', () => updateFieldStatus(field, statusImg));
+
+            // Обновляем статус при загрузке страницы
+            updateFieldStatus(field, statusImg);
+        });
+
+        // Обработчик отправки формы
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Предотвращаем стандартную отправку
+
+            let allRequiredValid = true;
+            const requiredFields = document.querySelectorAll('[required]');
+
+            // Проверяем все обязательные поля
+            requiredFields.forEach(field => {
+                // Используем validity API для проверки
+                if (!field.validity.valid) {
+                    allRequiredValid = false;
+                }
+            });
+
+            if (allRequiredValid) {
+                alert("Форма успешно заполнена и прошла валидацию!");
+            } else {
+                alert("Пожалуйста, исправьте ошибки в обязательных полях.");
+            }
+        });
+    </script>
+</body>
+
+</html>
