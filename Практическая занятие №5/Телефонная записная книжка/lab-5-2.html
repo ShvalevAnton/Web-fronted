@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Телефонная записная книжка</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Телефонная записная книжка</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+7 (XXX) XXX-XX-XX">
+                <span id="phoneError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required placeholder="Иван Иванов">
+                <span id="nameError" class="error"></span>
+            </div>
+            <button type="submit">Добавить контакт</button>
+            <button type="button" id="clearAllBtn">Очистить всё</button>
+        </form>
+
+        <div id="contactsList">
+            <h3>Сохранённые контакты:</h3>
+            <div id="contactsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        "use strict"; // Включение строгого режима  
+
+        // --- Константы ---
+        const CONTACTS_KEY = 'phoneBookContacts'; // Ключ для localStorage
+        const phoneInput = document.getElementById('phone');
+        const nameInput = document.getElementById('name');
+        const contactForm = document.getElementById('contactForm');
+        const contactsContainer = document.getElementById('contactsContainer');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const phoneErrorSpan = document.getElementById('phoneError');
+        const nameErrorSpan = document.getElementById('nameError');
+
+        // --- Проверка поддержки localStorage ---
+        function isLocalStorageSupported() {
+            try {
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!isLocalStorageSupported()) {
+            alert('Ваш браузер не поддерживает Web Storage API. Приложение может работать некорректно.');
+        }
+
+        // --- Валидация ---
+        function validateInput(phone, name) {
+            let isValid = true;
+            phoneErrorSpan.textContent = '';
+            nameErrorSpan.textContent = '';
+
+            if (!phone.trim()) {
+                phoneErrorSpan.textContent = 'Телефон обязателен.';
+                isValid = false;
+            } else if (!/^\+?\d{10,15}$/.test(phone.replace(/[^\d]/g, ''))) { // Простая проверка: 10-15 цифр
+                phoneErrorSpan.textContent = 'Введите корректный номер (10-15 цифр).';
+                isValid = false;
+            }
+
+            if (!name.trim()) {
+                nameErrorSpan.textContent = 'Имя обязательно.';
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // --- Операции с localStorage ---
+
+        // Получить все контакты из localStorage
+        function getContactsFromStorage() {
+            const stored = localStorage.getItem(CONTACTS_KEY);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        // Сохранить контакты в localStorage
+        function saveContactsToStorage(contacts) {
+            localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts));
+        }
+
+        // Добавить новый контакт
+        function addContact(phone, name) {
+            const contacts = getContactsFromStorage();
+            // Проверим, нет ли уже контакта с таким телефоном (упрощённо)
+            const existingIndex = contacts.findIndex(c => c.phone === phone);
+            if (existingIndex > -1) {
+                alert('Контакт с таким телефоном уже существует. Обновление...');
+                contacts[existingIndex].name = name; // Обновим имя
+            } else {
+                contacts.push({ phone, name });
+            }
+            saveContactsToStorage(contacts);
+            renderContacts(contacts);
+        }
+
+        // Удалить контакт по индексу
+        function removeContact(index) {
+            let contacts = getContactsFromStorage();
+            if (index >= 0 && index < contacts.length) {
+                contacts.splice(index, 1);
+                saveContactsToStorage(contacts);
+                renderContacts(contacts);
+            }
+        }
+
+        // Очистить все контакты
+        function clearAllContacts() {
+            if (confirm('Вы уверены, что хотите удалить все контакты?')) {
+                localStorage.removeItem(CONTACTS_KEY); // Удаляем ключ из localStorage
+                renderContacts([]); // Очищаем отображение
+            }
+        }
+
+        // --- Отображение ---
+        // Отобразить все контакты
+        function renderContacts(contacts) {
+            contactsContainer.innerHTML = ''; // Очистить контейнер
+            if (contacts.length === 0) {
+                contactsContainer.innerHTML = '<p>Записная книжка пуста.</p>';
+                return;
+            }
+
+            contacts.forEach((contact, index) => {
+                const contactDiv = document.createElement('div');
+                contactDiv.className = 'contact-item';
+
+                const infoSpan = document.createElement('span');
+                infoSpan.className = 'contact-info';
+                infoSpan.textContent = `${contact.name}: ${contact.phone}`;
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'contact-actions';
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.textContent = 'Удалить';
+                deleteBtn.onclick = () => removeContact(index);
+
+                actionsDiv.appendChild(deleteBtn);
+                contactDiv.appendChild(infoSpan);
+                contactDiv.appendChild(actionsDiv);
+
+                contactsContainer.appendChild(contactDiv);
+            });
+        }
+
+        // --- Обработчики событий ---
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Предотвратить стандартную отправку формы
+
+            const phone = phoneInput.value.trim();
+            const name = nameInput.value.trim();
+
+            if (validateInput(phone, name)) {
+                addContact(phone, name);
+                contactForm.reset(); // Очистить форму после добавления
+                phoneErrorSpan.textContent = '';
+                nameErrorSpan.textContent = '';
+            }
+        });
+
+        clearAllBtn.addEventListener('click', clearAllContacts);
+
+        // --- Инициализация ---
+        // Загрузить и отобразить контакты при загрузке страницы
+        window.addEventListener('load', () => {
+            const contacts = getContactsFromStorage();
+            renderContacts(contacts);
+        });
+
+        // Опционально: Обработка события storage, если контакты изменились в другой вкладке
+        window.addEventListener('storage', function (e) {
+            if (e.key === CONTACTS_KEY) {
+                // Обновить отображение, если данные в localStorage изменились
+                const contacts = getContactsFromStorage();
+                renderContacts(contacts);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

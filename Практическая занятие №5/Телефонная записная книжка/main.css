@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    width: 80px;
+}
+
+input[type="tel"],
+input[type="text"] {
+    padding: 5px;
+    width: 200px;
+}
+
+button {
+    padding: 8px 16px;
+    margin-right: 5px;
+}
+
+#contactsList {
+    margin-top: 20px;
+}
+
+.contact-item {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info {
+    flex-grow: 1;
+}
+
+.contact-actions {
+    flex-shrink: 0;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
